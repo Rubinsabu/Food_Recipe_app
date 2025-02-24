@@ -1,20 +1,16 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useContext} from 'react'
 import { NavLink } from 'react-router-dom'
 import Modal from './Modal'
 import InputForm from './inputForm'
+import { AuthContext } from '../context/AuthContext'
 
 function Navbar() {
   const [isOpen,setIsOpen]=useState(false)
-  let token = localStorage.getItem("token")
-  const [isLogin,setIsLogin]=useState(token ? true:false)
-
-  useEffect(()=>{
-    setIsLogin(token ? true:false)
-  },[token])
+  const {isLogin,setIsLogin}= useContext(AuthContext)
 
   const checkLogin=()=>{
-    if(token){
-      localStorage.removeItem("token")
+    if(isLogin){
+      localStorage.removeItem("token") //To logout
       localStorage.removeItem("user")
       setIsLogin(false)
     }else{

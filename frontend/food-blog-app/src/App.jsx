@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import MainNavigation from './components/MainNavigation'
 import AddFoodRecipe from './pages/AddFoodRecipe'
 import axios from 'axios'
+import { AuthProvider } from './context/AuthContext'
 
 const getAllRecipes=async()=>{
   let allRecipes=[]
@@ -15,7 +16,8 @@ const getAllRecipes=async()=>{
 }
 
 const router = createBrowserRouter([
-  {path:"/",element:<MainNavigation/>, children:[
+  { path:"/",element:<MainNavigation/>, 
+    children:[
     {path:"/",element:<Home/>,loader:getAllRecipes},
     {path:"/myRecipe",element:<Home/>},
     {path:"/favRecipe",element:<Home/>},
@@ -26,7 +28,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
+      <AuthProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </AuthProvider>
     </>
   )
 }

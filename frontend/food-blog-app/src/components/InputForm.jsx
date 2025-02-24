@@ -1,12 +1,16 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import axios from 'axios'
+import { AuthContext } from '../context/AuthContext'
+
 
 function InputForm({ setIsOpen }) {
 
+  const {setIsLogin}= useContext(AuthContext)
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [isSignUp,setIsSignUp] = useState(false)
   const [error,setError] = useState("")
+
 
   const handleOnSubmit = async(e)=>{
     e.preventDefault()
@@ -16,7 +20,8 @@ function InputForm({ setIsOpen }) {
       localStorage.setItem("token",res.data.token)
       localStorage.setItem("user",JSON.stringify(res.data.user))
       console.log("Login successful..closing modal");
-      setIsOpen()
+      setIsLogin(true);
+      setIsOpen();
     })
     .catch(data=>setError(data.response?.data?.error))
   }

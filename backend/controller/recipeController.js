@@ -28,19 +28,22 @@ const getRecipe = async(req,res)=>{
 const addRecipe = async(req,res)=>{
 
 try{
-    console.log("Received File:", req.file); // Debugging
-    console.log("Received Body:", req.body);
+    console.log("Received Request:", req.body);
+    console.log("Uploaded File:", req.file);
     const {title,ingredients,instructions,time}= req.body
 
     if(!title || !ingredients || !instructions){
-        res.json({message:"Required fields can't be empty"})
+        return res.json({message:"Required fields can't be empty"})
     }
 
 const newRecipe = await Recipes.create({
-    title,ingredients,instructions,time,coverImage:req.file.filename
+    title,ingredients,instructions,time,coverImage:req.file.filename,
+    createdBy:req.user.id
 })
+
 console.log("Recipe Saved:",newRecipe);
 return res.json(newRecipe) 
+
 } catch(error){
     console.log("Error saving recipe:",error.message);
     return res.status(500).json({ message: "Internal Server Error" });

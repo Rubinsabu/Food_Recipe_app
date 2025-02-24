@@ -14,13 +14,13 @@ console.log(allRecipes)
             allRecipes?.map((item,index)=>{
                 return(
                     <div key={index} className='card'>
-                        <img src={foodImg} width='120px' height='100px'></img>
+                        <img src={`http://localhost:5000/images/${item.coverImage}`} width='120px' height='100px'></img>
                         <div className='card-body'>
                             <div className='title'>{item.title}</div>
                         
                         <div className='icons'>
                             <div className='timer'>
-                                <BsStopwatchFill />30 mins</div>     
+                                <BsStopwatchFill />{item.time}</div>     
                             <FaHeart />                   
                         </div>
                         </div>

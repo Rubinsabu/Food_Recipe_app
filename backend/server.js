@@ -9,6 +9,7 @@ connectDb()
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static("public"))
 
 app.use("/",require("./routes/userRoute"))
 app.use("/recipe",require("./routes/recipe"))
