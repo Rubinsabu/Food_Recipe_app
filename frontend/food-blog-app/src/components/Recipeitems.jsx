@@ -1,11 +1,14 @@
 import React from 'react'
-import { useLoaderData } from 'react-router-dom'
+import { Link, useLoaderData } from 'react-router-dom'
 import { BsStopwatchFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import foodImg from '../assets/Corndogs.jpg'
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
 
 function Recipeitems() {
 const allRecipes = useLoaderData()
+let path = window.location.pathname === "/myRecipe" ? true:false
 console.log(allRecipes)
   return (
     <>
@@ -21,7 +24,12 @@ console.log(allRecipes)
                         <div className='icons'>
                             <div className='timer'>
                                 <BsStopwatchFill />{item.time}</div>     
-                            <FaHeart />                   
+                            {(!path) ? <FaHeart /> :
+                            <div className='action'>
+                              <Link to={`/editRecipe/${item._id}`} className='editIcon'><FaEdit /></Link> 
+                              <MdDelete className='deleteIcon'/>
+                            </div>
+                            }            
                         </div>
                         </div>
                     </div>

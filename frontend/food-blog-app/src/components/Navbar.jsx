@@ -7,6 +7,7 @@ import { AuthContext } from '../context/AuthContext'
 function Navbar() {
   const [isOpen,setIsOpen]=useState(false)
   const {isLogin,setIsLogin}= useContext(AuthContext)
+  let user=JSON.parse(localStorage.getItem("user"))
 
   const checkLogin=()=>{
     if(isLogin){
@@ -25,7 +26,7 @@ function Navbar() {
             <li><NavLink to="/">Home</NavLink></li>
             <li onClick={()=>!isLogin && setIsOpen(true)}><NavLink to={ isLogin ? "/myRecipe":"/"}>My Recipe</NavLink></li>
             <li onClick={()=>!isLogin && setIsOpen(true)}><NavLink to={ isLogin ? "/favRecipe": "/"}>Favorites</NavLink></li>
-            <li onClick={checkLogin}><p className='login'>{(isLogin) ? "Logout":"Login"}</p></li>
+            <li onClick={checkLogin}><p className='login'>{(isLogin) ? "Logout":"Login"}{user?.email ? `(${user?.email})`: ""}</p></li>
         </ul>   
       </header>
       { (isOpen) && <Modal onClose={()=>setIsOpen(false)}><InputForm setIsOpen={()=>setIsOpen(false)}/></Modal>}
