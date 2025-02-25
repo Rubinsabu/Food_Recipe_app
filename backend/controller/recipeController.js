@@ -28,7 +28,7 @@ const getRecipe = async(req,res)=>{
 const addRecipe = async(req,res)=>{
 
 try{
-    console.log("Received Request:", req.body);
+    console.log("Received Request:");
     console.log("Uploaded File:", req.file);
     const {title,ingredients,instructions,time}= req.body
 
@@ -67,7 +67,12 @@ const editRecipe = async(req,res)=>{
 }
 
 const deleteRecipe = async(req,res)=>{
-
+    try{
+        await Recipes.deleteOne({_id:req.params.id})
+        res.json({status:"ok"})
+    }catch(err){
+        return res.status(400).json({message:"error"})
+    }
 }
 
 module.exports={getRecipes, getRecipe, addRecipe, editRecipe, deleteRecipe, upload}
