@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useLoaderData } from 'react-router-dom'
+import React, { useEffect, useState,useContext } from 'react'
+import { Link, useLoaderData, useNavigate } from 'react-router-dom'
 import { BsStopwatchFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import axios from 'axios'
 import foodImg from '../assets/Corndogs.jpg'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { AuthContext } from '../context/AuthContext';
+import Modal from './Modal';
+import InputForm from './inputForm';
 
 function Recipeitems() {
 const allRecipes = useLoaderData()
@@ -13,6 +16,9 @@ const [Recipes,setRecipes]=useState()
 let path = window.location.pathname === "/myRecipe" ? true:false
 let favItems= JSON.parse(localStorage.getItem("fav")) ?? []
 const [isFavRecipe,setIsFavRecipe]=useState(false)
+const navigate = useNavigate()
+const {isLogin} = useContext(AuthContext);
+const [isOpen,setIsOpen] = useState(false); // State for login modal
 
 console.log(Recipes)
 
@@ -35,13 +41,27 @@ const favRecipe=(item)=>{
   setIsFavRecipe(pre=>!pre)
 }
 
+const recipeDetails=(id)=>{
+
+  if (!id || id.length !== 24) {
+    console.error("Invalid recipe ID:", id);
+    return;
+  }
+  if(isLogin){
+    navigate(`/recipe/${id}`)
+  }
+  else{
+    setIsOpen(true)
+  }
+}
+
   return (
     <>
       <div className='card-container'>
         {
             Recipes?.map((item,index)=>{
                 return(
-                    <div key={index} className='card'>
+                    <div key={index} className='card' onClick={()=>recipeDetails(item._id)}>
                         <img src={`http://localhost:5000/images/${item.coverImage}`} width='120px' height='100px'></img>
                         <div className='card-body'>
                             <div className='title'>{item.title}</div>
@@ -49,11 +69,11 @@ const favRecipe=(item)=>{
                         <div className='icons'>
                             <div className='timer'>
                                 <BsStopwatchFill />{item.time}</div>     
-                            {(!path) ? <FaHeart onClick={()=>favRecipe(item)}
+                            {(!path) ? <FaHeart onClick={(event)=>{ event.stopPropagation();  favRecipe(item)}}
                               style={{color:(favItems.some(res => res._id === item._id)) ? "red": ""}}/> :
                             <div className='action'>
-                              <Link to={`/editRecipe/${item._id}`} className='editIcon'><FaEdit /></Link> 
-                              <MdDelete onClick={()=>onDelete(item._id)} className='deleteIcon'/>
+                              <Link to={`/editRecipe/${item._id}`} className='editIcon' onClick={(event) => event.stopPropagation()}><FaEdit /></Link> 
+                              <MdDelete onClick={(event)=>{ event.stopPropagation(); onDelete(item._id)}} className='deleteIcon'/>
                             </div>
                             }            
                         </div>
@@ -63,6 +83,7 @@ const favRecipe=(item)=>{
             })
         }
       </div>
+      { (isOpen) && <Modal onClose={()=>setIsOpen(false)}><InputForm setIsOpen={()=>setIsOpen(false)}/></Modal>}
     </>
   )
 }

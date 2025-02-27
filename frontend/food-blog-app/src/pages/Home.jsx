@@ -20,7 +20,7 @@ function Home() {
     else
       setIsOpen(true)
   }
-  
+ 
   return (
     <>
       <section className='home'>
@@ -38,7 +38,7 @@ function Home() {
       </div>
       { (isOpen) && <Modal onClose={()=>setIsOpen(false)}><InputForm setIsOpen={()=>setIsOpen(false)}/></Modal>}
       <div className='recipe'>
-        <Recipeitems/>
+        <Recipeitems />
       </div>
     </>
   )
