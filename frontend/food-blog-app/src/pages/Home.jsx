@@ -26,8 +26,8 @@ function Home() {
       <section className='home'>
         <div className='left'>
             <h1>Food Recipe</h1>
-            <h5>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</h5>
-            <button onClick={addRecipe}>Share your recipe</button>
+            <h4>Welcome to Food Recipe App, your ultimate culinary playground! Unleash your inner chef as you explore a universe of mouthwatering flavors—create, tweak, and share your own recipes with just a few clicks, or add your signature dishes to inspire others. Found a dish that steals your heart? Save it to your favorites with a tap. Hungry for inspiration? Dive into rich recipe details, from secret tips to step-by-step magic. Whether you’re a seasoned kitchen rockstar or a curious newbie, our app turns every meal into a personal masterpiece—simple, fun, and irresistibly delicious. Ready to cook up something amazing? Jump in today!</h4>
+            <button style={{ marginTop: '2em' }} onClick={addRecipe}>Share your recipe</button>
         </div>
         <div className='right'>
             <img src={foodRecipe} width="320px" height="300px" alt="Corndogs" />

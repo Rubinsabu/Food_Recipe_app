@@ -11,7 +11,7 @@ function RecipeDetails() {
         <div className='outer-container'>
             <div className='profile'>
                 <img src={profileImg} width="50px" height="50px"></img>
-                <h5>{recipe.email}</h5>
+                <h5>Recipe Writer:  { recipe.email}</h5>
             </div>
             <h3 className='title'>{recipe.title}</h3>
             <img src={`http://localhost:5000/images/${recipe.coverImage}`} width="220px" height="200px"></img>
